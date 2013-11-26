@@ -1,30 +1,36 @@
+
 constructBoard = function(height, width){
   var board = new Array(height)
-  for(var rowI = 0; rowI < board.length; rowI++){
-    board[rowI] = new Array(width)
+  for(var y = 0; y < board.length; y++){
+    board[y] = new Array(width)
   }
   return board
 }
 
-var board = {
-  cells: constructBoard(10, 50)
-}
-
 renderBoard = function(){
   var container = document.getElementById('container')
-  var allCells = board.cells
-  for(var rowI = 0; rowI < allCells.length; rowI++){
+  var modelBoard = conwaysGame.model
+  var domBoard = []
+  for(var y = 0; y < modelBoard.length; y++){
+    var domRow = []
     row = document.createElement('div')
     row.setAttribute('class', 'row')
-    for(var cellI = 0; cellI < allCells[rowI].length; cellI++){
+    for(var x = 0; x < modelBoard[y].length; x++){
       var cell = document.createElement('div')
       cell.setAttribute('class', 'cell')
       row.appendChild(cell)
+      domRow.push(cell)
     }
     container.appendChild(row)
+    domBoard.push(domRow)
   }
+  return domBoard
+}
+
+var conwaysGame = {
+  model: constructBoard(20, 20),
 }
 
 window.onload = function(){
-	renderBoard();
+	conwaysGame.view = renderBoard();
 }
