@@ -1,10 +1,21 @@
 
 constructBoard = function(height, width){
-  var board = new Array(height)
-  for(var y = 0; y < board.length; y++){
-    board[y] = new Array(width)
+  var board = []
+  for(var y = 0; y < height; y++){
+    var row = []
+    for(var x = 0; x < width; x++){
+      row.push(0)
+    }
+    board.push(row)
   }
   return board
+}
+
+var makeAlive = function(){
+  this.setAttribute('class','cell alive')
+  var y = parseInt(this.getAttribute('data_y'))
+  var x = parseInt(this.getAttribute('data_x'))
+  conwaysGame.model[y][x] = 1
 }
 
 renderBoard = function(){
@@ -18,6 +29,9 @@ renderBoard = function(){
     for(var x = 0; x < modelBoard[y].length; x++){
       var cell = document.createElement('div')
       cell.setAttribute('class', 'cell')
+      cell.setAttribute('data_y',y)
+      cell.setAttribute('data_x',x)
+      cell.addEventListener('mouseover', makeAlive, false)
       row.appendChild(cell)
       domRow.push(cell)
     }
@@ -32,7 +46,7 @@ renderBoard = function(){
 // y+1, x-1  y+1, x  y+1,x+1
 
 var getNeighbors = function(y, x){
-  var modelBoard = conwaysGame.view
+  var modelBoard = conwaysGame.model
   var neighbors = []
   neighbors.push(modelBoard[y-1][x-1],
                  modelBoard[y-1][x],
@@ -49,30 +63,49 @@ var getNeighbors = function(y, x){
 var countLiving = function(neighborsArray){
   var numberOfLivingNeighbors = 0
   for(var i = 0; i < neighborsArray.length; i++){
-    console.log(neighborsArray[i])
-    if(neighborsArray[i].classList.contains('alive')){
-      numberOfLivingNeighbors += 1
+    if (neighborsArray[i] == 1 ){
+      numberOfLivingNeighbors += neighborsArray[i]
     }
   }
   return numberOfLivingNeighbors
 }
 
 
-boardStepper = function(){
-  for(var y = 0; y < modelBoard.length; y++){
-    for(var x = 0; x < modelBoard[y].length; x++){
-      currentCell = modelBoard[y][x]
-      neighbors = getNeighbors(y,x)
-      livingNeighbors = countLiving(neighbors)
+stepThroughTheBoard = function(){
+  var modelBoard = conwaysGame.model
+  var viewBoard = conwaysGame.view
+  for(var y = 1; y < modelBoard.length - 1; y++){
+    for(var x = 1; x < modelBoard[y].length -1; x++){
+      var currentModelCell = modelBoard[y][x]
+      var currentViewCell = viewBoard[y][x]
+      var neighbors = getNeighbors(y,x)
+      var numberOfLivingNeighbors = countLiving(neighbors)
+      if(numberOfLivingNeighbors < 2){
+        currentViewCell.setAttribute('class','cell')
+        currentModelCell = 0
+      }
+      else if(numberOfLivingNeighbors == 3){
+        currentViewCell.setAttribute('class','cell alive')
+        currentModelCell = 1
+      }
+      else if(numberOfLivingNeighbors > 3 ){
+        currentViewCell.setAttribute('class','cell')
+        currentModelCell = 0
+      }
     }
   }
 }
 
+var gameTime = function(){
+  seed();
+  
+}
 
 var conwaysGame = {
   model: constructBoard(20, 40),
 }
 
 window.onload = function(){
-	conwaysGame.view = renderBoard();
+  conwaysGame.view = renderBoard();
+
 }
