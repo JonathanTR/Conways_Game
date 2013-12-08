@@ -31,7 +31,7 @@ renderBoard = function(){
       cell.setAttribute('class', 'cell')
       cell.setAttribute('data_y',y)
       cell.setAttribute('data_x',x)
-      cell.addEventListener('mouseover', makeAlive, false)
+      cell.addEventListener('click', makeAlive, false)
       row.appendChild(cell)
       domRow.push(cell)
     }
@@ -76,29 +76,31 @@ stepThroughTheBoard = function(){
   var viewBoard = conwaysGame.view
   for(var y = 1; y < modelBoard.length - 1; y++){
     for(var x = 1; x < modelBoard[y].length -1; x++){
-      var currentModelCell = modelBoard[y][x]
       var currentViewCell = viewBoard[y][x]
       var neighbors = getNeighbors(y,x)
       var numberOfLivingNeighbors = countLiving(neighbors)
       if(numberOfLivingNeighbors < 2){
         currentViewCell.setAttribute('class','cell')
-        currentModelCell = 0
+        conwaysGame.model[y][x] = 0
       }
       else if(numberOfLivingNeighbors == 3){
         currentViewCell.setAttribute('class','cell alive')
-        currentModelCell = 1
+        conwaysGame.model[y][x] = 1
       }
       else if(numberOfLivingNeighbors > 3 ){
         currentViewCell.setAttribute('class','cell')
-        currentModelCell = 0
+        conwaysGame.model[y][x] = 0
       }
     }
   }
 }
 
 var gameTime = function(){
-  seed();
-  
+  i = 0
+  while( i < 100 ){
+    setTimeout(function(){stepThroughTheBoard()}, 200)
+    i++
+  }
 }
 
 var conwaysGame = {
