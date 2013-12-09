@@ -5,9 +5,9 @@
 
 .cell {
   display: inline-block;
-  height: 20px;
-  width: 20px;
-  border: 1px solid #bdc3c7;
+  height: 10px;
+  width: 10px;
+  border: 1px solid #fff;
   background-color: #ecf0f1;
 }
 
