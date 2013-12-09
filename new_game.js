@@ -166,7 +166,7 @@ stopConwaysGame = function(){
 startConwaysGame = function(){
   gameTime = setInterval(function(){
     nextStep()
-  }, 500)
+  }, 250)
 }
 
 window.onload = function(){
