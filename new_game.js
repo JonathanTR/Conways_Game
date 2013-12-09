@@ -166,11 +166,11 @@ stopConwaysGame = function(){
 startConwaysGame = function(){
   gameTime = setInterval(function(){
     nextStep()
-  }, 250)
+  }, 100)
 }
 
 window.onload = function(){
-  conwaysBoard.init(20,60)
+  conwaysBoard.init(40,60)
   renderBoard()
   document.getElementById('start').onclick = startConwaysGame
   document.getElementById('stop').onclick = stopConwaysGame
