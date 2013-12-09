@@ -159,10 +159,14 @@ renderBoard = function(){
 
 // CONTROLLER
 
+stopConwaysGame = function(){
+  clearInterval(gameTime)
+}
+
 runConwaysGame = function(){
-  setInterval(function(){
+  gameTime = setInterval(function(){
     nextStep()
-  }, 150)
+  }, 500)
 }
 
 window.onload = function(){
