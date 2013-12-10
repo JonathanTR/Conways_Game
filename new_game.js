@@ -114,6 +114,14 @@ nextStep = function(){
   renderBoard()
 }
 
+killAll = function(){
+  for(var i=0; i < conwaysBoard.currentGen.length; i++){
+    for(var j=0; j < conwaysBoard.currentGen[i].length; j++){
+      conwaysBoard.currentGen[i][j].alive = false
+    }
+  }
+}
+
 // VIEW
 
 clearBoard = function(){
@@ -159,6 +167,11 @@ renderBoard = function(){
 
 // CONTROLLER
 
+removeAllCells = function(){
+  killAll()
+  renderBoard()
+}
+
 stopConwaysGame = function(){
   clearInterval(gameTime)
 }
@@ -174,6 +187,7 @@ window.onload = function(){
   renderBoard()
   document.getElementById('start').onclick = startConwaysGame
   document.getElementById('stop').onclick = stopConwaysGame
+  document.getElementById('clear').onclick = removeAllCells
 }
 
 
