@@ -31,7 +31,9 @@ a {
 }
 
 #controls {
+  width: 720px;
   display: block;
+  overflow: hidden;
 }
 
 button {
@@ -52,4 +54,9 @@ button {
 
 #clear{
   background-color: #3498db
+}
+
+#timer{
+  display: inline-block;
+  float: right;
 }
